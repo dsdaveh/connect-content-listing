@@ -1,0 +1,36 @@
+---
+title: "list-content"
+format: html
+execute:
+    echo: false
+---
+
+## Public Access Content
+
+```{r}
+#| include: false
+library(dplyr)
+library(stringr)
+library(connectapi)
+client <- connect(
+  server = "https://connect.procogia.com/",
+  api_key = "iV7c4maz7bbiPAhdXtomeJ6AxwN7KQIA"
+)
+```
+
+```{r}
+content <- get_content(client) |> 
+    filter(access_type == 'all')
+```
+
+
+```{r}
+content |> select(
+    title,
+    content_url
+) 
+```
+
+
+
+

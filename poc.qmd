@@ -1,0 +1,42 @@
+---
+title: "list-content"
+format: html
+---
+
+## Public Access Content
+
+```{r}
+library(dplyr)
+library(stringr)
+library(connectapi)
+client <- connect(
+  server = "https://connect.procogia.com/",
+  api_key = "iV7c4maz7bbiPAhdXtomeJ6AxwN7KQIA"
+)
+```
+
+```{r}
+content <- get_content(client) |> 
+    filter(access_type == 'all')
+```
+
+```{r}
+# names(content)
+```
+
+```{r}
+content |> select(
+    title,
+    content_url,
+    image_name
+) 
+```
+
+```{r}
+oha_content <- get_content(client) |> 
+    filter(str_detect(title, '^OHA'))
+oha_thumb <- content_item(client, oha_content$guid) |> 
+    get_thumbnail()
+```
+
+
