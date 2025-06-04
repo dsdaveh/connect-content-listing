@@ -7,3 +7,5 @@
 *.html
 *Eastern Car*
 .DS_Store
+
+.Renviron
