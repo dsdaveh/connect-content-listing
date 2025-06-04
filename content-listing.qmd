@@ -37,7 +37,8 @@ client <- connect(
 ```{r}
 #| label: get-content
 content <- get_content(client) |> 
-    filter(access_type == 'all')
+    filter(access_type == 'all') |>
+    arrange(title)
 ```
 
 ```{r}
