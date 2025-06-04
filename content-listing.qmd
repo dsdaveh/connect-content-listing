@@ -16,8 +16,8 @@ execute:
 #| include: false
 library(dplyr)
 library(stringr)
+library(purrr)
 library(connectapi)
-library(DT)
 
 # Get environment variables
 server_url <- Sys.getenv("CONNECT_SERVER_URL")
@@ -44,84 +44,12 @@ content <- get_content(client) |>
 #| label: create-table
 #| output: asis
 cat("<div class='content-table'>\n")
-for (i in 1:nrow(content)) {
-  cat(sprintf("<div class='content-item'>\n"))
-  cat(sprintf("  <a href='%s' class='content-link'>%s</a>\n", 
-              content$content_url[i], 
-              content$title[i]))
-  cat("</div>\n")
-}
+content |>
+  select(title, content_url) |>
+  pmap(function(title, content_url) {
+    sprintf("<div class='content-item'>\n  <a href='%s' class='content-link'>%s</a>\n</div>\n",
+            content_url, title)
+  }) |>
+  walk(cat)
 cat("</div>\n")
 ```
-
-<style>
-/* ECCB-inspired styling */
-:root {
-  --primary-color: #003366;
-  --secondary-color: #0066cc;
-  --background-color: #f5f5f5;
-  --text-color: #333333;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-h1, h2, h3 {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--secondary-color);
-  padding-bottom: 0.5rem;
-}
-
-.content-table {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-.content-item {
-  padding: 0.75rem;
-  border: 1px solid #eee;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.content-item:hover {
-  background-color: #f8f9fa;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.content-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-size: 1rem;
-  display: block;
-  transition: color 0.3s ease;
-  line-height: 1.4;
-}
-
-@media (max-width: 1200px) {
-  .content-table {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .content-table {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
