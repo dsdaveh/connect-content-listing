@@ -43,7 +43,6 @@ content <- get_content(client) |>
 ```{r}
 #| label: create-table
 #| output: asis
-cat("## Public Access Content\n\n")
 cat("<div class='content-table'>\n")
 for (i in 1:nrow(content)) {
   cat(sprintf("<div class='content-item'>\n"))
