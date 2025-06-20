@@ -4,11 +4,11 @@ A Quarto-based dashboard that displays a clean, organized listing of publicly ac
 
 ## Features
 
-- Clean, modern interface with responsive design
-- Three-column grid layout that adapts to different screen sizes
+- multi-column grid layout that adapts to different screen sizes
 - Direct links to content items
 - Secure handling of API credentials
 - Automatic content filtering for public access items
+- Customizable through CSS styling
 
 ## Prerequisites
 
